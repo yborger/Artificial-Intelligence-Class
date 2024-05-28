@@ -1,0 +1,35 @@
+                             H E U R I S T I C S
+             Moves        Zero    Blocking   Better
+Puzzle       to Goal    expanded  expanded  expanded
+traffic00       7          106       35        35
+traffic02       9          684       188       188                   
+traffic04       9          34        25        25
+traffic06       13         85        64        64
+traffic08       13         347       169       169
+traffic10       22         234       147       147
+
+added to show a difference:
+traffic14       18         1559      1490      1351
+ 
+                             H E U R I S T I C S
+             Moves     Displaced   Manhattan  Bonus
+Puzzle       to Goal    expanded   expanded   expanded
+fifteen00       4           5          4       5    
+fifteen01       24        15134      1511      1364
+fifteen02       24        16748      1006      2253
+fifteen03       26        34086       410      1666
+fifteen04       20        7100        616      1239
+fifteen07       26        9043         84        61
+
+
+Complete the tables given above.
+
+
+How does your better heuristic improve on blocking (while maintaining
+admissibility)?
+It takes into account the minimum number of moves required for the blocking vehicles to move out of the way fully, instead of just the number of blocking vehicles. It maintains admissibility because the blocking cars have to be moved out of the way before reaching the goal so the minimum number of steps for them to be moved out of the way will not over-estimate the cost.
+
+If you implemented the bonus heuristic, how does it improve on
+Manhattan (while maintaining admissibility)?
+We found an explanation for our heuristic here: https://medium.com/swlh/looking-into-k-puzzle-heuristics-6189318eaca2.
+Essentially, the last move of the board has to be the last tiles in the last or second last rows moving out of the bottom right corner. Manhattan distance does not account for this when the last tile in the last row is not in the last column and the last tile in the second last row is not in the last row. Therefore, we can add this heuristic on top of the manhattan heuristic. Since we are adding it on top and it is a constant value of 2 depending on conditions, it will only increase the estimated moves as compared to manhattan. It will also only increase them sometimes. And since it's a rule that one of the two tiles has to pass through the bottom right corner, it will never overestimate. Therefore, admissibility is also maintained. It is interesting to note, however, that this heuristic can sometimes make the search expanded moves longer than manhattan and sometimes smaller.

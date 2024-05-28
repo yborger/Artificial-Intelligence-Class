@@ -1,0 +1,23 @@
+{
+  "HC":
+  {
+    "runs":2,
+    "steps":200,
+    "rand_move_prob": 0.25
+  },
+  "SA":
+  {
+    "runs":5,
+    "steps":2500,
+    "init_temp":50,
+    "temp_decay":0.99
+  },
+  "BS":
+  {
+    "pop_size":50,
+    "steps":500,
+    "init_temp":200,
+    "temp_decay":0.99,
+    "max_neighbors":5
+  }
+}

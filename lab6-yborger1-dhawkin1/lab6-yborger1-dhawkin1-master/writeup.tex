@@ -1,0 +1,114 @@
+\documentclass[11pt]{article}
+\usepackage{graphicx}
+\usepackage{fullpage}
+
+\title{CS63 Fall 2020\\Lab 6: Convolutional Neural Networks}
+\author{Yael Borger & Delaney Hawkins}%TODO: replace \ldots with your names
+\date{November 3 2022}
+
+\begin{document}
+
+% Look in /home/meeden/public/latex-example for an example of how
+% to inclue figures and create tables in your latex document.
+
+\maketitle
+
+\section{Data Set}
+The network used a set of 60000 images, that had been reshaped into a 28 by 28 image, for training purposes, and the test set included 10000 unseen images in the same size. For the training, the network would analyze the images of the training set and classify them, then compare that with the correct answers, and backpropagate to adjust what is recognized as key features that make this particular item of clothing different from the other ones. The results received from the network, after the test, include the number of parameters needed to run the network, the number of times the network did not correctly interpret the image, and the number of times the network guessed a specific item in the incorrect answers.
+
+
+\section{Network}
+The network starts by creating a 2 Dimensional Convolutional layer, "conv1" that creates 20 kernels/layers in 2 by 2 chunks of the image and has a input shape of 28 by 28. Then we added a second Convolutional Layer, "conv2" to make 25 layers of 3 by 3 chunks. The pooling starts with "pool1," and helps to lower the number of parameters we have in the system by summarizing 2 by 2 chunks of the image. To make up for the potential loss of accuracy, a third convolutional layer, "conv3" was added, but used bigger chunks of the image, 4 by 4 chunks to be precise, and 30 layers. At that point, the network was very connected but the accuracy was not ideal, so a dropout layer was included to randomly remove some of the connections to force the network make new connections that would hopefully increase the accuracy. The concern of accuracy also led to the creation of another convolutional layer, "conv4," followed closely by another pooling "pool2", and then another convolutional layer, "conv5" to see if the accuracy would improve even after the image had been summarized in groups. The flattening was to improve the parameter amount as it had become very high at that point. The hidden layer, "hidden1," takes note of certain features of the image to highlight particular characteristics that may help narrow down the options for identification. For example, if this hidden layer specifically noticed vertical lines, it would be able to more accurately identify the difference between trousers and most of the other classification options, since nearly all of the other options do not have a vertical gap in between other vertical shapes; the legs of the trousers are more likely to be identified as a key feature of pants. Since the image was flattened right before it, this hidden layer would likely identify these features by noting the patterned behavior, so if some item of clothing was symmetrical, the pattern would be clearer. The dropout right before the output call was part of an experimentation to see if we would lose a significant amount of accuracy from removing some links right at the end, and we did not actually lose much accuracy but did lose out on parameters. This network architecture performed the best out of the networks attempted, because it was getting the correct answers the most often, and also made the least incorrect guesses. The network was most accurate in comparison to the expected values in the tests.
+\\
+% TODO Include a screen shot of the summary of the network.
+\includegraphics[width=\textwidth]{overleaf2.png}
+
+% TODO If you have any insight into why it performed well, explain. 
+\\
+The reason it performed well is likely because of the 2 dimensional Convolutional layers, as they often separated the image data into smaller chunks of the image, filtering out the less important parts of the image as it did so. The parts that remained from the Convolutional layers were all of the more important pieces of information that the system could recognize. This is, at least, our theory.\\
+\\
+\section{Training}
+
+% TODO Run your network from scratch at least 5 times.
+
+% TODO Include a table showing the validation results of each of the runs
+% as well as the average performance over all runs.
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|} \hline
+{\bf Run Number} & {\bf Loss} & {\bf Accuracy} & {\bf Val-Loss} & {\bf Val-Accuracy}\\ \hline
+1 & 0.2654 & 0.9052 & 0.2771 & 0.9029 \\
+\hline
+2 & 0.2516 & 0.9101 & 0.2592 & 0.9068 \\
+\hline
+3 & 0.2624 & 0.9064 & 0.2658 & 0.9051 \\
+\hline
+4 & 0.2700 & 0.9036 & 0.2695 & 0.9050 \\
+\hline
+5 & 0.2647 & 0.9021 & 0.2699 & 0.9044 \\
+\hline
+Average & 0.2628 & 0.9055 & 0.2683 & 0.9048 \\
+\hline
+\end{tabular}
+\label{params}
+\end{center}
+\end{table}
+
+
+% TODO Include a screen shot of a typical learning graphs from these runs.
+\includegraphics[width=.8\textwidth]{overleaf1.png}
+
+\section{Evaluation}
+
+% TODO Explain what your network was good at and why.
+% TODO Explain what your network was bad at and why.
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|} \hline
+{\bf Run Number} & {\bf Loss} & {\bf Accuracy} & {\bf Val-Loss} & {\bf Val-Accuracy}\\ \hline
+
+The most common missed were\\
+ shirt(6)- missed 291 times\\
+ coat(4)- missed 158 times\\
+ t-shirt(0)- missed 134 times\\
+ pullover(2)- missed 126 times\\
+ dress(3)- missed 96 times\\
+ ankle boot(9)- missed 50 times\\
+ trouser(1)- missed 33 times\\
+ sneaker(7)- missed 30 times\\
+ bag(8)- missed 20 times\\
+ sandal(5)- missed 19 times\\
+\\
+ shirt(6)- guessed as an incorrect answer 228 times\\
+ pullover(2)- guessed as an incorrect answer 192 times\\
+ coat(4)- guessed as an incorrect answer 181 times\\
+ t-shirt(0)- guessed as an incorrect answer 148 times\\
+ dress(3)-guessed as an incorrect answer 84 times\\
+ sneaker(7)-guessed as an incorrect answer 58 times\\
+ ankle boot(9)-guessed as an incorrect answer 25 times\\
+ sandal(5)-guessed as an incorrect answer 21 times\\
+ bag(8)- guessed as an incorrect answer 18 times\\
+ trouser(1)- guessed as an incorrect answer 2 times\\
+\\
+The network was particularly good at sorting through information and identifying key features of the items, such as the parts of the clothing that were distinct and took up significant portions of the image. For that reason it was able to identify the items that were clearly a different category of clothing entirely. 
+\\
+The main issue that the network faced was identifying the differences between clothing pieces that were shaped similarly. There were clothing items that were in the same shape, such as the shirt, t-shirt, pullover, and coat, but had more detail-specific differences. The network would not be able to note those details because of the Convolutional layer filters and the pooling, but it did a pretty good job of identifying the area of the body, according to the data collected. Honestly, neither of us could identify these half of the time, so it seemed fair game.
+\\
+% TODO Include screenshots of the feature maps of convolution and/or
+% pooling layers to support your analysis. 
+\\
+Image generated while training:
+\\
+\includegraphics[width=.10\textwidth]{overleaf3.png}
+\\
+Conv1: 
+\\
+\includegraphics[width=\textwidth]{overleaf4.png}
+\\
+Pool1: 
+\\
+\includegraphics[width=\textwidth]{overleaf5.png}
+
+
+\end{document}
