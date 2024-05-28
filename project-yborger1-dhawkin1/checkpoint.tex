@@ -1,0 +1,37 @@
+\documentclass[11pt]{article}
+\usepackage{fullpage}
+\usepackage{graphicx}
+
+\title{CS63 Spring 2022\\Final Project Checkpoint}
+\author{Yael Borger & Delaney Hawkins}
+\date{December 1, 2022}
+
+\begin{document}
+
+\maketitle
+
+\section{Project Goal}
+
+The project goal is to be able to recognize flower types, specifically chamomile, tulip, rose, sunflower, dandelion. After training, we hope to achieve 90 percent accuracy at guessing the type of flower based on the image provided in the test set. 
+
+\section{AI Methods Used}
+
+We intend to utilize Deep Learning, since the neural networks were our favorite to play with during lab. We plan to experiment with the different layers to reach our goal. 
+
+\section{Staged Development Plan}
+
+First, we will divide the data set into "Testing" and "Training" sets so we can teach our program to generalize. \\
+Second, we will create a neural network that we think will best be able to recognize the different kinds of flowers. A sub-goal we hope to achieve is to have our program accurately determine at least one flower type consistently. Our assumption is that there will be difficulty distinguishing between certain flowers that have similar shapes and coloration, such as chamomile and dandelions, or tulips and roses. \\
+Third, we will analyze and rework the structure of the network based on what we notice to be proving successful and what features seem to be detected at different points.\\
+Fourth, keep adjusting network parameters.\\
+
+\section{Measure of Success}
+
+Our measure of success will be the percent accuracy on the testing data set. Since certain flowers are very similar, we will keep in mind that percent accuracy will not always reflect that our network has learned some pattern. Progress can be measured, in that case, by noting if the network has determined a flower to be one of its lookalikes.
+
+
+\section{Plans for Analyzing Results}
+
+We intend to use the same analytical methods used in Lab 6. We plan to utilize the analyzing portion from this lab, to measure Loss, Accuracy, Val-Loss, and Val-Accuracy. We will also be taking note of our most frequently missed and most frequently confused flower types to analyze what features seem to be most detected and most commonly overlooked by our network's setup.
+
+\end{document}
